@@ -1,18 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:musicanto/controllers/login_controller.dart';
+import 'package:musicanto/controllers/register_controller.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final LoginController controller = Get.put(LoginController());
+    final RegisterController controller = Get.put(RegisterController());
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('Register'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -38,6 +37,14 @@ class LoginPage extends StatelessWidget {
             Column(
               children: [
                 TextField(
+                  controller: controller.usernameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Username',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 10.0),
+                TextField(
                   controller: controller.emailController,
                   decoration: const InputDecoration(
                     labelText: 'Email',
@@ -53,6 +60,15 @@ class LoginPage extends StatelessWidget {
                     border: OutlineInputBorder(),
                   ),
                 ),
+                const SizedBox(height: 10.0), // Add space between fields
+                TextField(
+                  controller: controller.passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'Confirm Password',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 20.0),
@@ -62,11 +78,8 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () {
-                    // Handle forgot password logic (e.g., navigate to reset page)
-                    print('Forgot Password pressed');
-                  },
-                  child: const Text('Forgot Password?'),
+                  onPressed: controller.loginPage,
+                  child: const Text('Login instead?'),
                 ),
               ],
             ),
@@ -74,33 +87,18 @@ class LoginPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center, // Align elements
               children: [
-                // Login button (unchanged)
+                // Register button (unchanged)
                 Obx(
                   () => ElevatedButton(
                     onPressed: controller.isLoading.value
                         ? null
-                        : controller.loginUser,
+                        : controller.registerUser,
                     child: controller.isLoading.value
                         ? const CircularProgressIndicator()
-                        : const Text('Login'),
+                        : const Text('Create Account'),
                   ),
                 ),
                 // Forgot password text
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: controller.registerPage,
-                  child: const Text('Register'),
-                ),
-              ],
-            ),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Copyright © 2024 YourAppName'),
               ],
             ),
           ],

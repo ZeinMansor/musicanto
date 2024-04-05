@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:musicanto/pages/home_page.dart';
 import 'package:musicanto/pages/login_page.dart';
+import 'package:musicanto/pages/register_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -56,19 +59,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+    return GetMaterialApp(
+      title: 'Login Page',
+      initialRoute: '/login',
+      getPages: [
+        GetPage(name: '/login', page: () => const LoginPage()),
+        GetPage(name: '/register', page: () => const RegisterPage()),
+        GetPage(name: '/home', page: () => const HomePage()),
+      ],
     );
   }
 }
