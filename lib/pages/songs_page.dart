@@ -72,7 +72,10 @@ class _SongManagementPageState extends State<SongManagementPage> {
                   songs.add(Song(
                       _name,
                       Artist(0, _artist, _artist, "_name", " _name"),
-                      _thumbnailUrl));
+                      "type",
+                      222,
+                      _thumbnailUrl,
+                      "song_url"));
                   _name = ""; // Clear form fields after adding
                   _artist = "";
                   _thumbnailUrl = "";

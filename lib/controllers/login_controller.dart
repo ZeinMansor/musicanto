@@ -26,4 +26,9 @@ class LoginController extends GetxController {
   void registerPage() async {
     Get.offAllNamed("/register");
   }
+
+  void logout() async {
+    // clear token
+    Get.offAllNamed("/login");
+  }
 }
