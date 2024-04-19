@@ -1,10 +1,9 @@
 // import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:musicanto/components/section_header.dart';
 import 'package:musicanto/controllers/songs_management_controller.dart';
-import 'package:musicanto/models/artist.dart';
 import 'package:musicanto/models/song.dart';
 import 'package:musicanto/util/api.dart';
 import 'package:musicanto/widgets/artists_dropdown.dart';
@@ -119,12 +118,11 @@ class _SongManagementPageState extends State<SongManagementPage> {
                       value!.isEmpty ? "Please enter a song price" : null,
                   onSaved: (value) => setState(() => _name = value!),
                   decoration: const InputDecoration(
-                    labelText: 'Price',
-                    border: OutlineInputBorder(),
-                  ),
+                      labelText: 'Price',
+                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Colors.grey)),
                 ),
                 ArtistDropdown(
-                  apiUrl: "${ApiDataHolder.getUrl()}/artist/",
                   songController: controller,
                 ),
                 ElevatedButton(
@@ -136,6 +134,19 @@ class _SongManagementPageState extends State<SongManagementPage> {
                   },
                   child: const Text("Add Song"),
                 ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                const SectionHeader(title: "Songs"),
+                // ListView.builder(
+                //   shrinkWrap: true,
+                //   padding: const EdgeInsets.only(top: 20.0),
+                //   physics: const NeverScrollableScrollPhysics(),
+                //   itemCount: playlists.length,
+                //   itemBuilder: ((context, index) {
+                //     return PlaylistCard(playlists: playlists[index]);
+                //   }),
+                // )
               ],
             ),
           ),

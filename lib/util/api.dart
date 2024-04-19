@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:get/get.dart';
 import 'package:musicanto/models/artist.dart';
 import 'package:musicanto/models/order.dart';
 import 'package:musicanto/models/song.dart';
@@ -47,6 +48,7 @@ class ApiDataHolder {
         return Future(() => songs);
       }
     } catch (e) {
+      Get.snackbar("sad", "asd");
       print("Error getting songs list");
       print(e);
     }
@@ -119,6 +121,8 @@ class ApiDataHolder {
       final res = await http.get(Uri.parse(url), headers: headers);
       if (res.statusCode == 200) {
         var data = jsonDecode(res.body);
+        print("Artists in fetch data");
+        print(data);
         final artistsList = data['data'] as List<dynamic>;
         List<Artist> artists = artistsList
             .map((artistJson) => Artist.fromJson(artistJson))

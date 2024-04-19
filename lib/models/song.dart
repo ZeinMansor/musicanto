@@ -1,4 +1,6 @@
+import 'package:get/get.dart';
 import 'package:musicanto/models/artist.dart';
+import 'package:musicanto/util/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -18,11 +20,9 @@ class Song {
   factory Song.fromJson(Map<String, dynamic> json) => Song(
         json['id'] as int,
         json['title'] as String,
-        Artist.fromJson(json['artist']
-            as Map<String, dynamic>), // Assuming artist data exists
+        Artist.fromJson(json['artist'] as Map<String, dynamic>),
         json['type'] as String,
         json['price']?.toDouble() ?? 0.0, // Handle null price gracefully
-        // json['thumbnailUrl'] as String,
         "assets/images/1.jpg",
         "assets/music/music_01.mp3",
       );
@@ -44,32 +44,11 @@ class Song {
   // ];
 
   static void getSongs() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String url =
-        "https://wmb-svu-git-online-alisaleemhasans-projects.vercel.app/song/";
-
-    String token = prefs.getString("token")!;
-    var headers = {"Authorization": "Bearer $token"};
-    try {
-      print("BEFOR get request");
-      final res = await http.get(Uri.parse(url), headers: headers);
-      if (res.statusCode == 200) {
-        var data = jsonDecode(res.body);
-        final songList = data['data'] as List<dynamic>;
-        List<Song> songs =
-            songList.map((songJson) => Song.fromJson(songJson)).toList();
-        print("songs processed successfullt");
-
-        Song.songs = songs;
-        print("successfully loaded songs");
-        // return songs
-        // print(songs[0].);
-
-        // print(data);
-      }
-    } catch (e) {
-      print("Error getting songs list");
-      print(e);
+    var songsList = await ApiDataHolder.loadSongs();
+    if (songsList == null) {
+      songs = [];
+    } else {
+      songs = songsList;
     }
   }
 }

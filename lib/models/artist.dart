@@ -1,3 +1,5 @@
+import 'package:musicanto/util/api.dart';
+
 class Artist {
   final int id;
   final String firstName;
@@ -17,5 +19,13 @@ class Artist {
         json['country'] as String,
       );
 
-  static void loadArtists() {}
+  static Future<void> loadArtists() async {
+    var artists = await ApiDataHolder.loadArtists();
+
+    if (artists == null) {
+      artistsList == [];
+    } else {
+      artistsList = artists;
+    }
+  }
 }

@@ -5,14 +5,13 @@ import 'package:get/get.dart';
 import 'package:musicanto/controllers/songs_management_controller.dart';
 import 'package:http/http.dart' as http;
 import 'package:musicanto/models/artist.dart';
+import 'package:musicanto/util/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ArtistDropdown extends StatefulWidget {
-  final String apiUrl; // URL of your artist API endpoint
   final SongsManagementController songController; // GetX controller instance
 
-  const ArtistDropdown(
-      {Key? key, required this.apiUrl, required this.songController})
+  const ArtistDropdown({Key? key, required this.songController})
       : super(key: key);
 
   @override
@@ -30,38 +29,22 @@ class _ArtistDropdownState extends State<ArtistDropdown> {
   }
 
   Future<void> _fetchArtists() async {
-    print("API URL");
-    print(widget.apiUrl);
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    String token = prefs.getString("token")!;
-
-    var headers = {"Authorization": "Bearer $token"};
-    final response = await http.get(Uri.parse(widget.apiUrl), headers: headers);
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      List<Artist> artists =
-          data["data"].map((songJson) => Artist.fromJson(songJson)).toList();
-      print("DATA XXX");
-      print(data.toString());
-      setState(() {
-        _artists = artists
-            .map((artist) => DropdownMenuItem(
-                  value: artist.id,
-                  child: Text("${artist.firstName} ${artist.lastName}"),
-                ))
-            .toList();
-      });
-    } else {
-      // Handle API error
-
-      print('Error fetching artists: ${response.reasonPhrase}');
-      print(response);
-    }
+    await Artist.loadArtists();
+    List<Artist> artists = Artist.artistsList;
+    print("Gender in fetch artists");
+    setState(() {
+      _artists = artists
+          .map((artist) => DropdownMenuItem(
+                value: artist.id,
+                child: Text("${artist.firstName} ${artist.lastName}"),
+              ))
+          .toList();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    print("Artists in drop down");
     print(_artists);
     return FutureBuilder<void>(
       future: _futureArtists,

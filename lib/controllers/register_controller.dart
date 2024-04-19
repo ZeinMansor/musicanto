@@ -43,20 +43,17 @@ class RegisterController extends GetxController {
         var data = jsonDecode(res.body);
         final customerJson = data['data'];
         Customer customer = Customer.fromJson(customerJson);
+        isLoading.value = false;
+
         print("registerd successfully");
-        return Future(() => customer);
+        Get.to('/login'); // Navigate to main page
       }
     } catch (e) {
       print("Error registering new user");
+      isLoading.value = false;
+
       print(e);
     }
     isLoading.value = false;
-    // submit data to the backend
-    if (emailController.text == "admin@localhost.com" &&
-        passwordController.text == "123456") {
-      Get.offAllNamed('/home'); // Navigate to main page
-    } else {
-      Get.snackbar("Error", "Invalid credentials");
-    }
   }
 }

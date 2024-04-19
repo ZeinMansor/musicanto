@@ -166,17 +166,17 @@ class _CustomBottomNavBar extends StatelessWidget {
       items: [
         BottomNavigationBarItem(
             icon: IconButton(
-                onPressed: () => Get.offAllNamed("/login"),
+                onPressed: () => Get.to("/login"),
                 icon: const Icon(Icons.favorite_outline)),
             label: "Favorits"),
         BottomNavigationBarItem(
             icon: IconButton(
-                onPressed: () => () => Get.offAllNamed("/home"),
+                onPressed: () => () => Get.to("/home"),
                 icon: const Icon(Icons.home)),
             label: "Home"),
         BottomNavigationBarItem(
             icon: IconButton(
-              onPressed: () => Get.offAllNamed("/songs_management"),
+              onPressed: () => Get.to("/songs_management"),
               icon: const Icon(Icons.play_circle_outlined),
             ),
             label: "Play"),
