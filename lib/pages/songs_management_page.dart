@@ -122,9 +122,9 @@ class _SongManagementPageState extends State<SongManagementPage> {
                       border: OutlineInputBorder(),
                       labelStyle: TextStyle(color: Colors.grey)),
                 ),
-                ArtistDropdown(
-                  songController: controller,
-                ),
+                // ArtistDropdown(
+                //   songController: controller,
+                // ),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {

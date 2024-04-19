@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:musicanto/middleware/auth_middleware.dart';
+import 'package:musicanto/pages/artists_page.dart';
 import 'package:musicanto/pages/home_page.dart';
 import 'package:musicanto/pages/login_page.dart';
 import 'package:musicanto/pages/register_page.dart';
@@ -52,6 +53,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/songs_management',
           page: () => const SongManagementPage(),
+        ),
+        GetPage(
+          name: '/artists_management',
+          page: () => const ArtistManagementPage(),
         ),
       ],
     );

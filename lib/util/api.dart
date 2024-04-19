@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:get/get.dart';
+import 'package:musicanto/main.dart';
 import 'package:musicanto/models/artist.dart';
 import 'package:musicanto/models/order.dart';
 import 'package:musicanto/models/song.dart';
@@ -25,9 +26,7 @@ class ApiDataHolder {
   }
 
   static Future<List<Song>?> loadSongs() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    String token = prefs.getString("token")!;
+    String token = prefs!.getString("token")!;
 
     String url = "${getUrl()}/song";
 
@@ -40,7 +39,6 @@ class ApiDataHolder {
         final songList = data['data'] as List<dynamic>;
         List<Song> songs =
             songList.map((songJson) => Song.fromJson(songJson)).toList();
-        print("songs processed successfullt");
 
         Song.songs = songs;
         print("successfully loaded songs");
@@ -56,9 +54,7 @@ class ApiDataHolder {
 
   static Future<Song?> addNewSong(
       int artistsId, String title, String type, int price) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    String token = prefs.getString("token")!;
+    String token = prefs!.getString("token")!;
 
     String url = "${getUrl()}/artist/${artistsId.toString()}/song";
 
@@ -71,8 +67,7 @@ class ApiDataHolder {
         var data = jsonDecode(res.body);
         final songData = data['data'];
         Song songs = Song.fromJson(songData);
-        print("songs processed successfullt");
-        print("successfully loaded songs");
+        print("successfully added songs");
         return Future(() => songs);
       }
     } catch (e) {
@@ -109,9 +104,7 @@ class ApiDataHolder {
   }
 
   static Future<List<Artist>?> loadArtists() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    String token = prefs.getString("token")!;
+    String token = prefs!.getString("token")!;
 
     String url = "${getUrl()}/artist/";
 
@@ -132,6 +125,7 @@ class ApiDataHolder {
     } catch (e) {
       print("Error getting artists list");
       print(e);
+      Get.snackbar("Api Error", "Error loading songs data");
     }
   }
 

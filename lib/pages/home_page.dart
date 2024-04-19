@@ -20,7 +20,6 @@ class HomePage extends StatelessWidget {
     print("Calling getSongs");
 
     List<PlayList> playlists = PlayList.playlists;
-    // final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return Container(
       decoration: BoxDecoration(
@@ -166,17 +165,17 @@ class _CustomBottomNavBar extends StatelessWidget {
       items: [
         BottomNavigationBarItem(
             icon: IconButton(
-                onPressed: () => Get.to("/login"),
+                onPressed: () => Get.toNamed("/login"),
                 icon: const Icon(Icons.favorite_outline)),
             label: "Favorits"),
         BottomNavigationBarItem(
             icon: IconButton(
-                onPressed: () => () => Get.to("/home"),
+                onPressed: () => () => Get.toNamed("/home"),
                 icon: const Icon(Icons.home)),
             label: "Home"),
         BottomNavigationBarItem(
             icon: IconButton(
-              onPressed: () => Get.to("/songs_management"),
+              onPressed: () => Get.toNamed("/songs_management"),
               icon: const Icon(Icons.play_circle_outlined),
             ),
             label: "Play"),
@@ -185,7 +184,13 @@ class _CustomBottomNavBar extends StatelessWidget {
               onPressed: () => {},
               icon: const Icon(Icons.propane_outlined),
             ),
-            label: "Artists")
+            label: "Artists"),
+        BottomNavigationBarItem(
+            icon: IconButton(
+              onPressed: () => Get.toNamed("/artists_management"),
+              icon: const Icon(Icons.person_2_outlined),
+            ),
+            label: "Artists Management")
       ],
     );
   }

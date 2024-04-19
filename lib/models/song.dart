@@ -28,22 +28,8 @@ class Song {
       );
 
   static List<Song> songs = [];
-  // static List<Song> songs = [
-  //   Song(1, "Song Name 1", Artist(0, "Artists one", "last name", "m", "syr"),
-  //       "Classic", 220.0, "assets/images/1.jpg", "assets/music/music_01.mp3"),
-  //   Song(2, "Song Name 2", Artist(0, "Artists tow", "last name", "m", "syr"),
-  //       "Rock", 120.0, "assets/images/2.jpg", "assets/music/music_01.mp3"),
-  //   Song(3, "Song Name 3", Artist(0, "Artists tow", "last name", "m", "syr"),
-  //       "Rock", 120.0, "assets/images/3.jpg", "assets/music/music_01.mp3"),
-  //   Song(4, "Song Name 4", Artist(0, "Artists tow", "last name", "m", "syr"),
-  //       "Rock", 120.0, "assets/images/4.jpg", "assets/music/music_01.mp3"),
-  //   Song(5, "Song Name 5", Artist(0, "Artists tow", "last name", "m", "syr"),
-  //       "Rock", 120.0, "assets/images/5.jpg", "assets/music/music_01.mp3"),
-  //   Song(6, "Song Name 6", Artist(0, "Artists tow", "last name", "m", "syr"),
-  //       "Rock", 120.0, "assets/images/6.jpg", "assets/music/music_01.mp3"),
-  // ];
 
-  static void getSongs() async {
+  static Future<void> getSongs() async {
     var songsList = await ApiDataHolder.loadSongs();
     if (songsList == null) {
       songs = [];

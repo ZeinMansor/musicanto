@@ -45,7 +45,7 @@ class _ArtistDropdownState extends State<ArtistDropdown> {
   @override
   Widget build(BuildContext context) {
     print("Artists in drop down");
-    print(_artists);
+    print(_artists.length);
     return FutureBuilder<void>(
       future: _futureArtists,
       builder: (context, snapshot) {

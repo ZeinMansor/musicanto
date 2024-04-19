@@ -2,8 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:musicanto/components/custome_text_field.dart';
+import 'package:musicanto/components/section_header.dart';
 import 'package:musicanto/controllers/artists_controller.dart';
 import 'package:musicanto/models/artist.dart';
+import 'package:musicanto/models/playlist.dart';
+import 'package:musicanto/widgets/artist_list_card.dart';
+import 'package:musicanto/widgets/playlist_card.dart';
 
 class ArtistManagementPage extends StatefulWidget {
   const ArtistManagementPage({super.key});
@@ -43,6 +47,8 @@ class _ArtistManagementPageState extends State<ArtistManagementPage> {
 
   Widget _buildAddArtistForm() {
     final ArtistsController controller = Get.put(ArtistsController());
+    Artist.loadArtists();
+    List<Artist> artists = Artist.artistsList;
 
     return Container(
       padding: const EdgeInsets.all(8.0), // Add padding for better spacing
@@ -91,7 +97,10 @@ class _ArtistManagementPageState extends State<ArtistManagementPage> {
               items: ["Male", "Female"]
                   .map((gender) => DropdownMenuItem(
                         value: gender,
-                        child: Text(gender),
+                        child: Text(
+                          gender,
+                          style: const TextStyle(color: Colors.black),
+                        ),
                       ))
                   .toList(),
               onChanged: (value) => setState(() => _gender = value as String),
@@ -118,6 +127,44 @@ class _ArtistManagementPageState extends State<ArtistManagementPage> {
               },
               child: const Text("Add Artist"),
             ),
+            const SizedBox(
+              height: 20.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Artists List",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall!
+                            .copyWith(color: Colors.deepPurple),
+                      ),
+                      Text(
+                        "delete",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(color: Colors.deepPurple.shade500),
+                      )
+                    ],
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.only(top: 20.0),
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: artists.length,
+                    itemBuilder: ((context, index) {
+                      return ArtistListCard(artists: artists[index]);
+                    }),
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),
