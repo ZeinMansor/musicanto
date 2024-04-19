@@ -37,9 +37,9 @@ class RegisterPage extends StatelessWidget {
             Column(
               children: [
                 TextField(
-                  controller: controller.usernameController,
+                  controller: controller.firstNameController,
                   decoration: const InputDecoration(
-                    labelText: 'Username',
+                    labelText: 'First Name',
                     border: OutlineInputBorder(),
                   ),
                 ),

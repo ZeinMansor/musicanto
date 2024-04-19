@@ -14,11 +14,11 @@ class Customer {
   factory Customer.fromJson(Map<String, dynamic> json) => Customer(
         json['id'] as int,
         json['username'] as String,
-        json['password'] as String,
+        json['role'] as String,
         json['FName'] as String,
         json['LName'] as String,
+        (json['password'] ?? "") as String,
         json['Address'] as String,
         json['email'] as String,
-        json['role'] as String,
       );
 }

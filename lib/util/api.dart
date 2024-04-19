@@ -79,6 +79,33 @@ class ApiDataHolder {
     }
   }
 
+  static Future<Song?> deleteSong(int songId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String token = prefs.getString("token")!;
+
+    String url = "${getUrl()}/song/$songId";
+
+    var headers = {"Authorization": "Bearer $token"};
+    try {
+      print("BEFOR get request");
+      final res = await http.delete(Uri.parse(url), headers: headers);
+      if (res.statusCode == 200) {
+        var data = jsonDecode(res.body);
+        final songData = data['data'];
+        final affectedRows = songData['affected'] as int;
+
+        if (affectedRows > 0) {
+          print("Deleted successfully");
+        }
+      }
+    } catch (e) {
+      print("Error adding new song songs list");
+      print(e);
+    }
+    return null;
+  }
+
   static Future<List<Artist>?> loadArtists() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 

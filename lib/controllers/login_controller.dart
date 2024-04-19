@@ -34,6 +34,8 @@ class LoginController extends GetxController {
 
         var customserData = data['customer'];
 
+        print(customserData);
+
         Customer customer = Customer.fromJson(customserData);
 
         prefs.setString("token", token);
