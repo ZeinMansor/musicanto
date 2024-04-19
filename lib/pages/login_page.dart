@@ -1,10 +1,27 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:musicanto/controllers/login_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    initSharedPreference();
+  }
+
+  void initSharedPreference() async {
+    prefs = await SharedPreferences.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +42,8 @@ class LoginPage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
+              child: const Padding(
+                padding: EdgeInsets.all(10.0),
                 child: Icon(
                   Icons.music_note,
                   size: 40.0,
@@ -43,6 +60,7 @@ class LoginPage extends StatelessWidget {
                     labelText: 'Email',
                     border: OutlineInputBorder(),
                   ),
+                  style: const TextStyle(color: Colors.black),
                 ),
                 const SizedBox(height: 10.0), // Add space between fields
                 TextField(
@@ -52,6 +70,7 @@ class LoginPage extends StatelessWidget {
                     labelText: 'Password',
                     border: OutlineInputBorder(),
                   ),
+                  style: const TextStyle(color: Colors.black),
                 ),
               ],
             ),

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:musicanto/pages/home_page.dart';
+import 'package:musicanto/pages/login_page.dart';
+import 'package:musicanto/pages/register_page.dart';
+import 'package:musicanto/pages/song_page.dart';
+import 'package:musicanto/pages/songs_management_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,30 +25,14 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const HomePage(),
+      getPages: [
+        GetPage(name: '/login', page: () => const LoginPage()),
+        GetPage(name: '/register', page: () => const RegisterPage()),
+        GetPage(name: '/home', page: () => const HomePage()),
+        GetPage(name: '/song', page: () => const SongPage()),
+        GetPage(
+            name: '/songs_management', page: () => const SongManagementPage()),
+      ],
     );
   }
 }
-
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({super.key, required this.title});
-
-//   final String title;
-
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<HomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetMaterialApp(
-//       title: 'Login Page',
-//       initialRoute: '/home',
-//       getPages: [
-//         GetPage(name: '/login', page: () => const LoginPage()),
-//         GetPage(name: '/register', page: () => const RegisterPage()),
-//         GetPage(name: '/home', page: () => const HomePage()),
-//       ],
-//     );
-//   }
-// }

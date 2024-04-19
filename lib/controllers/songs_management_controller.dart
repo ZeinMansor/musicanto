@@ -3,17 +3,18 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:musicanto/models/customer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginController extends GetxController {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class SongsManagementController extends GetxController {
+  final TextEditingController songTitleController = TextEditingController();
+  final TextEditingController songTypeController = TextEditingController();
+  final TextEditingController songPriceController = TextEditingController();
+  final RxInt songArtistController = RxInt(0);
 
   // final SharedPreferences prefs = await SharedPreferences.getInstance();
   RxBool isLoading = false.obs;
 
-  void loginUser() async {
+  void addNewSong() async {
     isLoading.value = true;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String url =
@@ -22,8 +23,8 @@ class LoginController extends GetxController {
     // Add API Call here
     try {
       Map<String, String> body = {
-        "email": emailController.text,
-        "password": passwordController.text
+        "email": "emailController.text",
+        "password": ""
       };
 
       final res = await http.post(Uri.parse(url), body: body);
@@ -32,15 +33,11 @@ class LoginController extends GetxController {
         var data = jsonDecode(res.body.toString());
         var token = data['backendTokens']['accessToken'];
 
-        var customserData = data['customer'];
-
-        Customer customer = Customer.fromJson(customserData);
+        var firstName = data['FName'];
+        var lastName = data['LName'];
+        var email = data['email'];
 
         prefs.setString("token", token);
-        prefs.setString("firstName", customer.firstName);
-        prefs.setString("lastName", customer.lastName);
-        prefs.setString("email", customer.email);
-        prefs.setInt("customerId", customer.id);
 
         print(data.toString());
         isLoading.value = false;
@@ -55,14 +52,5 @@ class LoginController extends GetxController {
       print(e);
       isLoading.value = false;
     }
-  }
-
-  void registerPage() async {
-    Get.offAllNamed("/register");
-  }
-
-  void logout() async {
-    // clear token
-    Get.offAllNamed("/login");
   }
 }

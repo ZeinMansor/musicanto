@@ -3,10 +3,9 @@ import 'package:get/get.dart';
 import 'package:musicanto/components/section_header.dart';
 import 'package:musicanto/components/songs_component.dart';
 import 'package:musicanto/controllers/login_controller.dart';
+import 'package:musicanto/models/playlist.dart';
 import 'package:musicanto/models/song.dart';
-import 'package:musicanto/pages/login_page.dart';
-import 'package:musicanto/pages/register_page.dart';
-import 'package:musicanto/pages/song_page.dart';
+import 'package:musicanto/widgets/playlist_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -15,7 +14,13 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     LoginController loginController = Get.put(LoginController());
 
+    Song.getSongs();
     List<Song> songs = Song.songs;
+
+    print("Calling getSongs");
+
+    List<PlayList> playlists = PlayList.playlists;
+    // final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return Container(
       decoration: BoxDecoration(
@@ -39,8 +44,19 @@ class HomePage extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: const Column(
-                  children: [SectionHeader(title: "Playlists")],
+                child: Column(
+                  children: [
+                    const SectionHeader(title: "Playlists"),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.only(top: 20.0),
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: playlists.length,
+                      itemBuilder: ((context, index) {
+                        return PlaylistCard(playlists: playlists[index]);
+                      }),
+                    )
+                  ],
                 ),
               )
             ],
@@ -50,27 +66,7 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
-  // @override
-  // State<HomePage> createState() => _MyHomePageState();
 }
-
-// class _MyHomePageState extends State<HomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetMaterialApp.router(
-//       title: 'Login Page',
-
-//       // initialRoute: '/home',
-//       getPages: [
-//         GetPage(name: '/login', page: () => const LoginPage()),
-//         GetPage(name: '/register', page: () => const RegisterPage()),
-//         GetPage(name: '/home', page: () => const HomePage()),
-//         GetPage(name: '/song', page: () => const SongPage()),
-//       ],
-//     );
-//   }
-// }
 
 class _TrendingMusic extends StatelessWidget {
   const _TrendingMusic({
@@ -167,14 +163,29 @@ class _CustomBottomNavBar extends StatelessWidget {
       selectedItemColor: Colors.white,
       showSelectedLabels: true,
       showUnselectedLabels: false,
-      items: const [
+      items: [
         BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_outline), label: "Favorits"),
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            icon: IconButton(
+                onPressed: () => Get.offAllNamed("/login"),
+                icon: const Icon(Icons.favorite_outline)),
+            label: "Favorits"),
         BottomNavigationBarItem(
-            icon: Icon(Icons.play_circle_outlined), label: "Play"),
+            icon: IconButton(
+                onPressed: () => () => Get.offAllNamed("/home"),
+                icon: const Icon(Icons.home)),
+            label: "Home"),
         BottomNavigationBarItem(
-            icon: Icon(Icons.propane_outlined), label: "Artists")
+            icon: IconButton(
+              onPressed: () => Get.offAllNamed("/songs_management"),
+              icon: const Icon(Icons.play_circle_outlined),
+            ),
+            label: "Play"),
+        BottomNavigationBarItem(
+            icon: IconButton(
+              onPressed: () => {},
+              icon: const Icon(Icons.propane_outlined),
+            ),
+            label: "Artists")
       ],
     );
   }
